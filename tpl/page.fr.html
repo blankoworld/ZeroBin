@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>ZeroBin</title>
+<meta name="robots" content="noindex" />
+<link type="text/css" rel="stylesheet" href="css/zerobin.css?{$VERSION|rawurlencode}#" /> 
+<script src="js/jquery.js?{$VERSION|rawurlencode}#"></script>
+<script src="js/sjcl.js?{$VERSION|rawurlencode}#"></script>
+<script src="js/base64.js?{$VERSION|rawurlencode}#"></script>
+<script src="js/rawdeflate.js?{$VERSION|rawurlencode}#"></script>
+<script src="js/rawinflate.js?{$VERSION|rawurlencode}#"></script>
+<script src="js/zerobin.js?{$VERSION|rawurlencode}#"></script>
+<link type="text/css" rel="stylesheet" href="js/highlight.styles/monokai.css?{$VERSION|rawurlencode}#">
+<script src="js/highlight.pack.js?{$VERSION|rawurlencode}#"></script>
+
+<!--[if lt IE 10]>
+<style> body {padding-left:60px;padding-right:60px;} div#ienotice {display:block;} </style>
+<![endif]-->
+
+<!--[if lt IE 10]>
+<style> div#ienotice {display:block; }  div#oldienotice {display:block; } </style>
+<![endif]-->
+
+</head>
+  <body>
+      <div id="aboutbox">
+          ZeroBin est un outil de partage de texte en ligne dont le code source est ouvert. Le serveur où réside les données n'a aucune connaissance du contenu.
+          Les informations sont chiffrées/déchiffrées <i>dans le navigateur</i> en utilisant le standard de chiffrement avancé (AES) à 256 bits. 
+          Plus d'informations sur <a href="http://sebsauvage.net/wiki/doku.php?id=php:zerobin">la page du projet</a>.<br />
+          <span style="text-decoration:blink;font-size:10pt;color:#a4b3c4;">&#9654;</span> Note: Ceci est un service de test: 
+          Les données peuvent être supprimées à n'importe quel moment. Des chats mourrons si vous abusez de ce service.
+</div>
+    <h1 title="ZeroBin" onclick="window.location.href=scriptLocation();return false;">ZeroBin</h1><br>
+    <h2>Parce que l'ignorance est un bonheur</h2><br>
+    <h3>{$VERSION}</h3>
+    <noscript><div class="nonworking">Javascript est requis pour que ZeroBin fonctionne.<br>Désolé pour le désagrément.</div></noscript>
+    <div id="oldienotice" class="nonworking">ZeroBin requièrt un navigateur moderne pour fonctionner.</div>
+    <div id="ienotice">Vous utilisez encore Internet Explorer ? &nbsp;Faites-vous une fleur, passez à un navigateur moderne&nbsp;: 
+        <a href="http://www.mozilla.org/firefox/">Firefox</a>, 
+        <a href="http://www.opera.com/">Opera</a>, 
+        <a href="http://www.google.com/chrome">Chrome</a>, 
+        <a href="http://www.apple.com/safari">Safari</a>...
+    </div>
+    <div id="status">{$STATUS}</div>
+    <div id="errormessage" style="display:none">{$ERRORMESSAGE|htmlspecialchars}</div>
+    <div id="toolbar">
+    <button id="newbutton" onclick="window.location.href=scriptLocation();return false;" style="display:none;"><img src="img/icon_new.png#" width="11" height="15" />Nouveau</button>
+    <button id="sendbutton" onclick="send_data();return false;" style="display:none;"><img src="img/icon_send.png#" width="18" height="15" />Envoyer</button>
+    <button id="clonebutton" onclick="clonePaste();return false;" style="display:none;"><img src="img/icon_clone.png#" width="15" height="17" />Dupliquer</button>
+    <button id="rawtextbutton" onclick="rawText();return false;" style="display:none; "><img src="img/icon_raw.png#" width="15" height="15" style="padding:1px 0px 1px 0px;"/>Texte brut</button>
+      <div id="expiration" style="display:none;">Durée de vie: 
+      <select id="pasteExpiration" name="pasteExpiration">
+        <option value="5min">5 minutes</option>
+        <option value="10min">10 minutes</option>
+        <option value="1hour">1 heure</option>
+        <option value="1day">1 jour</option>
+        <option value="1week">1 semaine</option>
+        <option value="1month" selected="selected">1 mois</option>
+        <option value="1year">1 année</option>
+        <option value="never">Indéfiniment</option>
+      </select>
+      </div>
+      <div id="remainingtime" style="display:none;"></div>
+      <div id="burnafterreadingoption" class="button" style="display:none;">
+         <input type="checkbox" id="burnafterreading" name="burnafterreading" />
+         <label for="burnafterreading">Détruire après lecture</label>
+      </div>
+      <div id="opendisc" class="button" style="display:none;">
+         <input type="checkbox" id="opendiscussion" name="opendiscussion" />
+         <label for="opendiscussion">Ouvrir une discussion</label>
+      </div>
+      <div id="syntaxcoloringoption" class="button" style="display:none;">
+         <input type="checkbox" id="syntaxcoloring" name="syntaxcoloring" />
+         <label for="syntaxcoloring">Coloration syntaxique</label>
+      </div>
+    </div>
+    <div id="pasteresult" style="display:none;">
+      <div id="deletelink"></div>
+      <div id="pastelink"></div>
+    </div>
+    <div id="cleartext" style="display:none;"></div>
+    <textarea id="message" name="message" cols="80" rows="25" style="display:none;"></textarea>
+    <div id="discussion" style="display:none;">
+        <h4>Discussion</h4>
+        <div id="comments"></div>
+    </div>
+    <div id="cipherdata" style="display:none;">{$CIPHERDATA}</div>
+  </body>
+</html>
